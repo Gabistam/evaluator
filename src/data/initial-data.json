@@ -1,0 +1,59 @@
+{
+    "_id": "evaluator_db_001",
+    "categories": [
+      {
+        "id": "cat1",
+        "name": "Compétences Techniques",
+        "image": "💻",
+        "appreciations": [
+          {
+            "id": "app1",
+            "level": "Très insuffisant",
+            "comment": "Maîtrise très limitée des langages et outils de développement web fondamentaux."
+          },
+          {
+            "id": "app2",
+            "level": "Insuffisant",
+            "comment": "Difficultés à appliquer les concepts techniques de base, connaissances fragmentaires."
+          },
+          {
+            "id": "app3",
+            "level": "Bon",
+            "comment": "Bonne compréhension et application des langages et outils de développement web."
+          },
+          {
+            "id": "app4",
+            "level": "Excellent",
+            "comment": "Excellente maîtrise des compétences techniques, intègre des solutions innovantes."
+          }
+        ]
+      },
+      {
+        "id": "cat2",
+        "name": "Créativité et Innovation",
+        "image": "💡",
+        "appreciations": [
+          {
+            "id": "app5",
+            "level": "Très insuffisant",
+            "comment": "Manque de créativité, idées souvent copiées ou banales."
+          },
+          {
+            "id": "app6",
+            "level": "Passable",
+            "comment": "Montre des signes de créativité, hésite à expérimenter de nouvelles idées."
+          },
+          {
+            "id": "app7",
+            "level": "Très bon",
+            "comment": "Grande créativité, développe des idées originales qui enrichissent les projets."
+          },
+          {
+            "id": "app8",
+            "level": "Exceptionnel",
+            "comment": "Visionnaire, révolutionne les approches traditionnelles avec des idées novatrices remarquables."
+          }
+        ]
+      }
+    ]
+  }
