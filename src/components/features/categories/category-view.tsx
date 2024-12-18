@@ -4,7 +4,7 @@ import { Category, Appreciation } from "@/types";
 import { AppreciationList } from "@/components/features/appreciations/appreciation-list";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updateAppreciation, deleteAppreciation } from "@/lib/data";
 
 interface CategoryViewProps {
@@ -12,26 +12,48 @@ interface CategoryViewProps {
 }
 
 export function CategoryView({ initialCategory }: CategoryViewProps) {
-  const [category, setCategory] = useState(initialCategory);
+  const [category, setCategory] = useState<Category | null>(null);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setCategory(initialCategory);
+    setIsClient(true);
+  }, [initialCategory]);
+
+  if (!isClient || !category) {
+    return (
+      <div className="space-y-6 opacity-0">
+        <div className="flex items-center gap-4">
+          <div className="w-24 h-8 bg-gray-200 rounded animate-pulse" />
+        </div>
+      </div>
+    );
+  }
 
   const handleUpdate = (updatedAppreciation: Appreciation) => {
     updateAppreciation(category.id, updatedAppreciation.id, updatedAppreciation);
     
-    setCategory(prev => ({
-      ...prev,
-      appreciations: prev.appreciations.map(app =>
-        app.id === updatedAppreciation.id ? updatedAppreciation : app
-      )
-    }));
+    setCategory(prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        appreciations: prev.appreciations.map(app =>
+          app.id === updatedAppreciation.id ? updatedAppreciation : app
+        )
+      };
+    });
   };
 
   const handleDelete = (appreciationId: string) => {
     deleteAppreciation(category.id, appreciationId);
     
-    setCategory(prev => ({
-      ...prev,
-      appreciations: prev.appreciations.filter(app => app.id !== appreciationId)
-    }));
+    setCategory(prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        appreciations: prev.appreciations.filter(app => app.id !== appreciationId)
+      };
+    });
   };
 
   return (
