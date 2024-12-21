@@ -5,7 +5,7 @@ import { AppreciationList } from "@/components/features/appreciations/appreciati
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
-import { updateAppreciation, deleteAppreciation } from "@/lib/data";
+import { updateAppreciation, deleteAppreciation, toggleFavorite } from "@/lib/data";
 
 interface CategoryViewProps {
   initialCategory: Category;
@@ -56,6 +56,22 @@ export function CategoryView({ initialCategory }: CategoryViewProps) {
     });
   };
 
+  const handleToggleFavorite = (appreciationId: string, isFavorite: boolean) => {
+    toggleFavorite(category.id, appreciationId, isFavorite);
+    
+    setCategory(prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        appreciations: prev.appreciations.map(app =>
+          app.id === appreciationId 
+            ? { ...app, isFavorite } 
+            : app
+        )
+      };
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
@@ -77,6 +93,7 @@ export function CategoryView({ initialCategory }: CategoryViewProps) {
         appreciations={category.appreciations} 
         onUpdate={handleUpdate}
         onDelete={handleDelete}
+        onToggleFavorite={handleToggleFavorite}
       />
     </div>
   );

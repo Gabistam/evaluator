@@ -1,17 +1,47 @@
-import { getCategories } from '@/lib/data'
-import { CategoryCard } from '@/components/features/categories/category-card'
+"use client";
+
+import { useSession } from "next-auth/react";
+import { LogIn } from "lucide-react";
+import Link from "next/link";
+import { AppreciationList } from "@/components/features/categories/category-list";
+import { getCategories } from "@/lib/data";
 
 export default function HomePage() {
-  const categories = getCategories()
+  const { data: session } = useSession();
 
-  return (
-    <main className="container mx-auto py-6">
-      <h1 className="text-3xl font-bold mb-6">Evaluator</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map(category => (
-          <CategoryCard key={category.id} category={category} />
-        ))}
+  if (session) {
+    // Utilisateur connecté : afficher les catégories
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Evaluator</h1>
+        <AppreciationList categories={getCategories()} />
       </div>
-    </main>
-  )
+    );
+  }
+
+  // Utilisateur non connecté : afficher le hero
+  return (
+    <div className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
+      <div className="max-w-2xl mx-auto space-y-8">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Bienvenue sur Evaluator
+        </h1>
+        
+        <p className="text-xl text-gray-600 mb-8">
+          Gérez vos appréciations et évaluations de manière simple et efficace.
+          Connectez-vous pour accéder à toutes les fonctionnalités.
+        </p>
+
+        <div className="flex items-center justify-center gap-4">
+          <Link
+            href="/auth/login"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            <LogIn className="w-5 h-5" />
+            Se connecter
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 }

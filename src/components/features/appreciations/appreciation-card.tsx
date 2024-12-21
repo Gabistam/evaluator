@@ -1,7 +1,7 @@
 "use client";
 
 import { Appreciation } from "@/types";
-import { Copy, CheckCircle, Pencil, Trash2 } from "lucide-react";
+import { Copy, CheckCircle, Pencil, Trash2, Star } from "lucide-react";
 import { useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { EditAppreciationForm } from "./edit-appreciation-form";
@@ -10,12 +10,14 @@ interface AppreciationCardProps {
   appreciation: Appreciation;
   onUpdate?: (updatedAppreciation: Appreciation) => void;
   onDelete?: (appreciationId: string) => void;
+  onToggleFavorite?: (appreciationId: string, isFavorite: boolean) => void;
 }
 
 export function AppreciationCard({ 
   appreciation,
   onUpdate,
-  onDelete
+  onDelete,
+  onToggleFavorite
 }: AppreciationCardProps) {
   const [copied, setCopied] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -42,6 +44,11 @@ export function AppreciationCard({
     setIsDeleteModalOpen(false);
   };
 
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onToggleFavorite?.(appreciation.id, !appreciation.isFavorite);
+  };
+
   return (
     <>
       <div className="group p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
@@ -50,6 +57,18 @@ export function AppreciationCard({
             {appreciation.level}
           </span>
           <div className="flex items-center gap-2">
+            <button
+              className="p-2 hover:bg-gray-50 rounded-full transition-colors"
+              onClick={handleToggleFavorite}
+            >
+              <Star 
+                className={`w-5 h-5 ${
+                  appreciation.isFavorite 
+                    ? 'text-yellow-400 fill-yellow-400' 
+                    : 'text-gray-400 group-hover:text-gray-600'
+                }`}
+              />
+            </button>
             <button
               className="p-2 hover:bg-gray-50 rounded-full transition-colors"
               onClick={() => setIsEditModalOpen(true)}
@@ -87,7 +106,6 @@ export function AppreciationCard({
         )}
       </div>
 
-      {/* Modal de confirmation de suppression */}
       <Modal
         title="Confirmer la suppression"
         isOpen={isDeleteModalOpen}
@@ -114,7 +132,6 @@ export function AppreciationCard({
         </div>
       </Modal>
 
-      {/* Modal d'édition existante */}
       <Modal
         title="Modifier l'appréciation"
         isOpen={isEditModalOpen}

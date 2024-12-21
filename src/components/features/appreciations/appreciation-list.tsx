@@ -2,25 +2,37 @@ import { Appreciation } from "@/types";
 import { AppreciationCard } from "./appreciation-card";
 
 interface AppreciationListProps {
-  appreciations: Appreciation[];
+  appreciations: (Appreciation & { categoryName?: string; categoryImage?: string })[];
   onUpdate: (updatedAppreciation: Appreciation) => void;
   onDelete: (appreciationId: string) => void;
+  onToggleFavorite: (appreciationId: string, isFavorite: boolean) => void;
+  showCategory?: boolean;
 }
 
 export function AppreciationList({ 
   appreciations, 
   onUpdate,
-  onDelete
+  onDelete,
+  onToggleFavorite,
+  showCategory 
 }: AppreciationListProps) {
   return (
     <div className="grid grid-cols-1 gap-4">
       {appreciations.map((appreciation) => (
-        <AppreciationCard 
-          key={appreciation.id} 
-          appreciation={appreciation}
-          onUpdate={onUpdate}
-          onDelete={onDelete}
-        />
+        <div key={appreciation.id} className="space-y-2">
+          {showCategory && appreciation.categoryName && (
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <span>{appreciation.categoryImage}</span>
+              <span>{appreciation.categoryName}</span>
+            </div>
+          )}
+          <AppreciationCard 
+            appreciation={appreciation}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+            onToggleFavorite={onToggleFavorite}
+          />
+        </div>
       ))}
     </div>
   );
