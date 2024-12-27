@@ -57,7 +57,7 @@ export function CategoryView({ initialCategory }: CategoryViewProps) {
   };
 
   const handleToggleFavorite = (appreciationId: string, isFavorite: boolean) => {
-    toggleFavorite(category.id, appreciationId, isFavorite);
+    toggleFavorite(category.id, appreciationId, isFavorite, "userId");
     
     setCategory(prev => {
       if (!prev) return prev;

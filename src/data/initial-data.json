@@ -10,25 +10,29 @@
           "id": "app1",
           "level": "Très insuffisant",
           "comment": "Maîtrise très limitée des langages et outils de développement web fondamentaux.",
-          "isFavorite": false
+          "isFavorite": false,
+          "userId": null
         },
         {
           "id": "app2",
           "level": "Insuffisant",
           "comment": "Difficultés à appliquer les concepts techniques de base, connaissances fragmentaires.",
-          "isFavorite": false
+          "isFavorite": false,
+          "userId": null
         },
         {
           "id": "app3",
           "level": "Bon",
           "comment": "Bonne compréhension et application des langages et outils de développement web.",
-          "isFavorite": false
+          "isFavorite": false,
+          "userId": null
         },
         {
           "id": "app4",
           "level": "Excellent",
           "comment": "Excellente maîtrise des compétences techniques, intègre des solutions innovantes.",
-          "isFavorite": false
+          "isFavorite": false,
+          "userId": null
         }
       ]
     },
@@ -41,25 +45,29 @@
           "id": "app5",
           "level": "Très insuffisant",
           "comment": "Manque de créativité, idées souvent copiées ou banales.",
-          "isFavorite": false
+          "isFavorite": false,
+          "userId": null
         },
         {
           "id": "app6",
           "level": "Passable",
           "comment": "Montre des signes de créativité, hésite à expérimenter de nouvelles idées.",
-          "isFavorite": false
+          "isFavorite": false,
+          "userId": null
         },
         {
           "id": "app7",
           "level": "Très bon",
           "comment": "Grande créativité, développe des idées originales qui enrichissent les projets.",
-          "isFavorite": false
+          "isFavorite": false,
+          "userId": null
         },
         {
           "id": "app8",
           "level": "Exceptionnel",
           "comment": "Visionnaire, révolutionne les approches traditionnelles avec des idées novatrices remarquables.",
-          "isFavorite": false
+          "isFavorite": false,
+          "userId": null
         }
       ]
     }

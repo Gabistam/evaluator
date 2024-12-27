@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
-import { AppreciationList } from "@/components/features/categories/category-list";
+import { CategoryList } from "@/components/features/categories/category-list";
 import { getCategories } from "@/lib/data";
 
 export default function HomePage() {
@@ -14,7 +14,7 @@ export default function HomePage() {
     return (
       <div className="space-y-6">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Evaluator</h1>
-        <AppreciationList categories={getCategories()} />
+        <CategoryList categories={getCategories()} />
       </div>
     );
   }

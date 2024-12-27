@@ -4,6 +4,7 @@ export interface Appreciation {
   comment: string;
   isFavorite?: boolean;
   categoryId?: string;
+  userId?: string | null;
 }
 
 export interface Category {
@@ -21,4 +22,10 @@ export interface Database {
 export interface FavoriteAppreciation extends Appreciation {
   categoryName: string;
   categoryImage: string;
+}
+
+export interface UserFavorite {
+  userId: string;
+  appreciationId: string;
+  categoryId: string;
 }

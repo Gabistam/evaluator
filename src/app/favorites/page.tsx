@@ -15,7 +15,8 @@ export default function FavoritesPage() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setFavorites(getFavoriteAppreciations());
+    const userId = "userId"; // Replace with actual userId
+    setFavorites(getFavoriteAppreciations(userId));
     setIsClient(true);
   }, []);
 
@@ -48,7 +49,7 @@ export default function FavoritesPage() {
       // Si on retire des favoris, on retire de la liste
       setFavorites(prev => prev.filter(app => app.id !== appreciationId));
     }
-    toggleFavorite("", appreciationId, isFavorite);
+    toggleFavorite("", appreciationId, isFavorite, "userId");
   };
 
   return (
