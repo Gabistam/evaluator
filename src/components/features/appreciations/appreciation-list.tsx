@@ -1,12 +1,14 @@
 import { Appreciation } from "@/types";
 import { AppreciationCard } from "./appreciation-card";
 
+// Ajout de la prop readOnly
 interface AppreciationListProps {
   appreciations: (Appreciation & { categoryName?: string; categoryImage?: string })[];
   onUpdate: (updatedAppreciation: Appreciation) => void;
   onDelete: (appreciationId: string) => void;
   onToggleFavorite: (appreciationId: string, isFavorite: boolean) => void;
   showCategory?: boolean;
+  readOnly?: boolean; // <-- Ajout de la prop ici
 }
 
 export function AppreciationList({ 
@@ -14,7 +16,8 @@ export function AppreciationList({
   onUpdate,
   onDelete,
   onToggleFavorite,
-  showCategory 
+  showCategory,
+  readOnly = false, // Valeur par défaut si non renseignée
 }: AppreciationListProps) {
   return (
     <div className="grid grid-cols-1 gap-4">
@@ -31,6 +34,8 @@ export function AppreciationList({
             onUpdate={onUpdate}
             onDelete={onDelete}
             onToggleFavorite={onToggleFavorite}
+            // Si vous voulez éventuellement passer readOnly à AppreciationCard
+            readOnly={readOnly}
           />
         </div>
       ))}

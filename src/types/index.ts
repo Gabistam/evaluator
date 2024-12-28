@@ -5,6 +5,7 @@ export interface Appreciation {
   isFavorite?: boolean;
   categoryId?: string;
   userId?: string | null;
+  
 }
 
 export interface Category {
@@ -12,6 +13,7 @@ export interface Category {
   name: string;
   image: string;
   appreciations: Appreciation[];
+  description: string;
 }
 
 export interface Database {
