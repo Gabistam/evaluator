@@ -27,6 +27,8 @@ export async function GET(
 
     return NextResponse.json(category.appreciations);
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { error: "Erreur lors de la récupération des appréciations" },
       { status: 500 }
@@ -75,6 +77,8 @@ export async function POST(
 
     return NextResponse.json(newAppreciation, { status: 201 });
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { error: "Erreur lors de la création de l'appréciation" },
       { status: 500 }

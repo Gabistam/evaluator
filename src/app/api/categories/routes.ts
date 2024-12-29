@@ -11,6 +11,8 @@ export async function GET() {
     const categories = getCategories();
     return NextResponse.json(categories);
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { error: "Erreur lors de la récupération des catégories" },
       { status: 500 }
@@ -51,6 +53,8 @@ export async function POST(request: NextRequest) {
     
     return NextResponse.json(newCategory, { status: 201 });
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { error: "Erreur lors de la création de la catégorie" },
       { status: 500 }

@@ -26,6 +26,8 @@ export async function GET(
       }
       return NextResponse.json(category);
     } catch (error) {
+        console.log(error);
+
       return NextResponse.json(
         { error: "Erreur lors de la récupération de la catégorie" },
         { status: 500 }
@@ -33,7 +35,7 @@ export async function GET(
     }
   }
 
-  
+
 // PUT /api/categories/[categoryId]
 export async function PUT(
   request: NextRequest,
@@ -65,6 +67,8 @@ export async function PUT(
       ...body
     });
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { error: "Erreur lors de la mise à jour de la catégorie" },
       { status: 500 }
@@ -101,6 +105,8 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { error: "Erreur lors de la suppression de la catégorie" },
       { status: 500 }
