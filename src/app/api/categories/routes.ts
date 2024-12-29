@@ -1,3 +1,5 @@
+//src/app/api/categories/route.ts
+
 import { getCategories } from "@/lib/data";
 import { Category } from "@/types";
 import { NextRequest, NextResponse } from "next/server";

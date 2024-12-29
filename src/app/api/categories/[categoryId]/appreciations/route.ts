@@ -1,3 +1,5 @@
+//src/app/api/categories/[categoryId]/appreciations/route.ts
+
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { getCategory } from "@/lib/data";

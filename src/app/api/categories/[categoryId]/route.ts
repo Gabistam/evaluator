@@ -1,3 +1,5 @@
+//src/app/api/categories/[categoryId]/route.ts
+
 import { getCategory } from "@/lib/data";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
@@ -10,28 +12,28 @@ interface RouteParams {
 
 // GET /api/categories/[categoryId]
 export async function GET(
-  request: NextRequest,
-  { params }: RouteParams
-) {
-  try {
-    const category = getCategory(params.categoryId);
-    
-    if (!category) {
+    request: NextRequest,
+    // 2e param = "context"
+    { params }: { params: { categoryId: string } }
+  ) {
+    try {
+      const category = getCategory(params.categoryId);
+      if (!category) {
+        return NextResponse.json(
+          { error: "Catégorie non trouvée" },
+          { status: 404 }
+        );
+      }
+      return NextResponse.json(category);
+    } catch (error) {
       return NextResponse.json(
-        { error: "Catégorie non trouvée" },
-        { status: 404 }
+        { error: "Erreur lors de la récupération de la catégorie" },
+        { status: 500 }
       );
     }
-
-    return NextResponse.json(category);
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Erreur lors de la récupération de la catégorie" },
-      { status: 500 }
-    );
   }
-}
 
+  
 // PUT /api/categories/[categoryId]
 export async function PUT(
   request: NextRequest,
