@@ -16,7 +16,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
           <div>
             <h2 className="text-xl font-semibold text-gray-900">{category.name}</h2>
             <p className="text-sm text-gray-500">
-              {category.appreciations.length} niveaux d'évaluation
+              {category.appreciations.length} niveaux d&rsquo;évaluation
             </p>
           </div>
         </div>
