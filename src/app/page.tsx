@@ -5,16 +5,27 @@ import { LogIn } from "lucide-react";
 import Link from "next/link";
 import { CategoryList } from "@/components/features/categories/category-list";
 import { getCategories } from "@/lib/data";
+import { useEffect, useState } from "react";
+import { Category } from "@/types/index";
 
 export default function HomePage() {
   const { data: session } = useSession();
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const data = await getCategories();
+      setCategories(data);
+    };
+    fetchCategories();
+  }, []);
 
   if (session) {
     // Utilisateur connecté : afficher les catégories
     return (
       <div className="space-y-6">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Evaluator</h1>
-        <CategoryList categories={getCategories()} />
+        <CategoryList categories={categories} />
       </div>
     );
   }

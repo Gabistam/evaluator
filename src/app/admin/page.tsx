@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/hooks/use-auth";
 import { Category, Appreciation } from "@/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CategoryForm } from "@/components/features/admin/category-form";
 import { AppreciationManager } from "@/components/features/admin/appreciation-manager";
 import { Modal } from "@/components/ui/modal";
@@ -10,7 +10,15 @@ import { getCategories } from "@/lib/data";
 
 export default function AdminPage() {
   const { isAdmin, isLoading } = useAuth('admin');
-  const [categories, setCategories] = useState<Category[]>(getCategories());
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const data = await getCategories();
+      setCategories(data);
+    };
+    fetchCategories();
+  }, []);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 

@@ -16,7 +16,7 @@ export async function GET(
   { params }: RouteParams
 ) {
   try {
-    const category = getCategory(params.categoryId);
+    const category = await getCategory(params.categoryId);
     
     if (!category) {
       return NextResponse.json(
