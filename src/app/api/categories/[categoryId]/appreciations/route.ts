@@ -4,16 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { getCategory } from "@/lib/data";
 
-interface RouteParams {
-  params: {
-    categoryId: string;
-  };
-}
+
 
 // GET /api/categories/[categoryId]/appreciations
 export async function GET(
   request: NextRequest,
-  { params }: RouteParams
+  { params }: { params: { categoryId: string } }
 ) {
   try {
     const category = await getCategory(params.categoryId);
@@ -39,7 +35,7 @@ export async function GET(
 // POST /api/categories/[categoryId]/appreciations
 export async function POST(
   request: NextRequest,
-  { params }: RouteParams
+  { params }: { params: { categoryId: string } }
 ) {
   try {
     const session = await getServerSession();

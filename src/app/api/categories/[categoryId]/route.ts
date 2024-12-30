@@ -4,11 +4,6 @@ import { getCategory } from "@/lib/data";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
-interface RouteParams {
-  params: {
-    categoryId: string;
-  };
-}
 
 // GET /api/categories/[categoryId]
 export async function GET(
@@ -39,7 +34,7 @@ export async function GET(
 // PUT /api/categories/[categoryId]
 export async function PUT(
   request: NextRequest,
-  { params }: RouteParams
+  { params }: { params: { categoryId: string } }
 ) {
   try {
     const session = await getServerSession();
@@ -79,7 +74,7 @@ export async function PUT(
 // DELETE /api/categories/[categoryId]
 export async function DELETE(
   request: NextRequest,
-  { params }: RouteParams
+  { params }: { params: { categoryId: string } }
 ) {
   try {
     const session = await getServerSession();
