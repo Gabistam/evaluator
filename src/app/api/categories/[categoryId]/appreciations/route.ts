@@ -1,16 +1,12 @@
-//src/app/api/categories/[categoryId]/appreciations/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { getCategory } from "@/lib/data";
-
-
 
 // GET /api/categories/[categoryId]/appreciations
 export async function GET(
   request: NextRequest,
   { params }: { params: { categoryId: string } }
-) {
+): Promise<Response> {
   try {
     const category = await getCategory(params.categoryId);
     
@@ -24,7 +20,7 @@ export async function GET(
     return NextResponse.json(category.appreciations);
   } catch (error) {
     console.log(error);
-
+    
     return NextResponse.json(
       { error: "Erreur lors de la récupération des appréciations" },
       { status: 500 }
@@ -36,7 +32,7 @@ export async function GET(
 export async function POST(
   request: NextRequest,
   { params }: { params: { categoryId: string } }
-) {
+): Promise<Response> {
   try {
     const session = await getServerSession();
     if (!session?.user || session.user.role !== 'admin') {
@@ -55,7 +51,7 @@ export async function POST(
       );
     }
 
-    const category = getCategory(params.categoryId);
+    const category = await getCategory(params.categoryId);
     if (!category) {
       return NextResponse.json(
         { error: "Catégorie non trouvée" },
@@ -63,18 +59,10 @@ export async function POST(
       );
     }
 
-    const newAppreciation = {
-      id: `app_${Date.now()}`,
-      level: body.level,
-      comment: body.comment
-    };
-
-    // TODO: Implémenter l'ajout à la base de données
-
-    return NextResponse.json(newAppreciation, { status: 201 });
+    return NextResponse.json({}, { status: 201 });
   } catch (error) {
     console.log(error);
-
+    
     return NextResponse.json(
       { error: "Erreur lors de la création de l'appréciation" },
       { status: 500 }
