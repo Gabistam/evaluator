@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
 import { CategoryList } from "@/components/features/categories/category-list";
-import { getCategories } from "@/lib/data";
 import { useEffect, useState } from "react";
 import { Category } from "@/types/index";
 
@@ -14,8 +13,13 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const data = await getCategories();
-      setCategories(data);
+      try {
+        const response = await fetch('/api/categories');
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des catégories:', error);
+      }
     };
     fetchCategories();
   }, []);

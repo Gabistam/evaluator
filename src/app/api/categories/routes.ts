@@ -1,14 +1,14 @@
-import { getCategories } from "@/lib/data";
-import { Category } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { MainModel } from "@/models";
+import { connectDB } from "@/lib/mongodb";
 
 // GET /api/categories
 export async function GET() {
   try {
-    const categories = await getCategories();
-    return NextResponse.json(categories);
+    await connectDB();
+    const result = await MainModel.findOne({ _id: 'evaluator_db_001' });
+    return NextResponse.json(result?.categories || []);
   } catch (error) {
     console.error(error);
     return NextResponse.json(
@@ -21,6 +21,7 @@ export async function GET() {
 // POST /api/categories
 export async function POST(request: NextRequest) {
   try {
+    await connectDB();
     const session = await getServerSession();
     if (!session?.user || session.user.role !== 'admin') {
       return NextResponse.json(
@@ -31,7 +32,6 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     
-    // Validation
     if (!body.name || !body.image) {
       return NextResponse.json(
         { error: "Nom et image requis" },
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newCategory: Category = {
+    const newCategory = {
       id: `cat_${Date.now()}`,
       name: body.name,
       image: body.image,
@@ -47,7 +47,6 @@ export async function POST(request: NextRequest) {
       description: body.description || ''
     };
 
-    // Ajout à la base de données
     await MainModel.updateOne(
       { _id: 'evaluator_db_001' },
       { $push: { categories: newCategory } }

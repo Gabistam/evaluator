@@ -1,9 +1,21 @@
 import { Category, Appreciation, FavoriteAppreciation } from '@/types';
 import { MainModel } from '@/models';
 
+import { connectDB } from './mongodb';
+
+connectDB().then(() => console.log('Connexion à la base de données réussie')).catch(console.error);
+
 export const getCategories = async (): Promise<Category[]> => {
-  const result = await MainModel.findOne({ _id: 'evaluator_db_001' });
-  return result?.categories || [];
+  try {
+    const result = await MainModel.findOne({ _id: 'evaluator_db_001' });
+    return (result?.categories || []).map(category => ({
+      ...category,
+      description: category.description || ''
+    }));
+  } catch (error) {
+    console.error('Erreur lors de la récupération des catégories:', error);
+    return [];
+  }
 };
 
 export const getCategory = async (id: string): Promise<Category | undefined> => {
