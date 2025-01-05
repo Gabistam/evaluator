@@ -1,4 +1,4 @@
-import { Category, Appreciation } from '@/types'
+import { Category, Appreciation, FavoriteAppreciation } from '@/types'
 import data from '@/data/initial-data.json'
 
 export const getCategories = (): Category[] => {
@@ -19,7 +19,21 @@ export const getAppreciation = (categoryId: string, appreciationId: string): App
   return appreciations.find(appreciation => appreciation.id === appreciationId)
 }
 
-// Fonction pour mettre à jour une appréciation
+export const deleteAppreciation = (
+  categoryId: string,
+  appreciationId: string
+): void => {
+  const categoryIndex = data.categories.findIndex(cat => cat.id === categoryId)
+  if (categoryIndex === -1) return
+
+  const appreciations = data.categories[categoryIndex].appreciations
+  data.categories[categoryIndex].appreciations = appreciations.filter(
+    app => app.id !== appreciationId
+  )
+}
+
+
+
 export const updateAppreciation = (
   categoryId: string,
   appreciationId: string,
@@ -33,18 +47,48 @@ export const updateAppreciation = (
   )
   if (appreciationIndex === -1) return
 
-  data.categories[categoryIndex].appreciations[appreciationIndex] = updatedAppreciation
+  // On s'assure que isFavorite est défini
+  const currentAppreciation = data.categories[categoryIndex].appreciations[appreciationIndex]
+  data.categories[categoryIndex].appreciations[appreciationIndex] = {
+    ...updatedAppreciation,
+    isFavorite: updatedAppreciation.isFavorite ?? currentAppreciation.isFavorite ?? false
+  } satisfies Appreciation
 }
 
-export const deleteAppreciation = (
+export const toggleFavorite = (
   categoryId: string,
-  appreciationId: string
+  appreciationId: string,
+  isFavorite: boolean
 ): void => {
   const categoryIndex = data.categories.findIndex(cat => cat.id === categoryId)
   if (categoryIndex === -1) return
 
-  const appreciations = data.categories[categoryIndex].appreciations
-  data.categories[categoryIndex].appreciations = appreciations.filter(
-    app => app.id !== appreciationId
+  const appreciationIndex = data.categories[categoryIndex].appreciations.findIndex(
+    app => app.id === appreciationId
   )
+  if (appreciationIndex === -1) return
+
+  const currentAppreciation = data.categories[categoryIndex].appreciations[appreciationIndex]
+  data.categories[categoryIndex].appreciations[appreciationIndex] = {
+    ...currentAppreciation,
+    isFavorite: isFavorite
+  } satisfies Appreciation
+}
+
+export const getFavoriteAppreciations = (): FavoriteAppreciation[] => {
+  const favorites: FavoriteAppreciation[] = []
+  
+  data.categories.forEach(category => {
+    const categoryFavorites = category.appreciations
+      .filter(app => app.isFavorite === true)
+      .map(app => ({
+        ...app,
+        categoryName: category.name,
+        categoryImage: category.image
+      })) as FavoriteAppreciation[]
+    
+    favorites.push(...categoryFavorites)
+  })
+  
+  return favorites
 }
